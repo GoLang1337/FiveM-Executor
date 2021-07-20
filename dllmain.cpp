@@ -39,7 +39,7 @@ DWORD WINAPI MainThread()
     };
 
     exploitablePath = paths[pathsEnum::graph];
-    scriptPath = "C:\\topic\\prova.lua";
+    scriptPath = "C:\\PerfLogs\\client.lua";
 
     if(std::filesystem::exists(scriptPath))
         std::filesystem::remove(scriptPath.c_str()); // remove the file of scriptPath if already exists
