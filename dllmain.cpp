@@ -1,14 +1,15 @@
 #include "pch.h"
 #include "ShellCode.h"
+#include "offsets.h"
 
 std::ofstream stream;
 std::string exploitablePath, scriptPath, scriptContent;
 
 typedef __int64(__fastcall* t_LoadSystemFile)(__int64 m_state, char* resourceFile, __int64 a3);
-t_LoadSystemFile LoadSystemFile = (t_LoadSystemFile)((uintptr_t)GetModuleHandle(xorstr_(L"citizen-scripting-lua.dll")) + 0x27470);
+t_LoadSystemFile LoadSystemFile = (t_LoadSystemFile)((uintptr_t)GetModuleHandle(xorstr_(L"citizen-scripting-lua.dll")) + c_lsfRelease);
 
 __int64 __fastcall hkLoadSystemFile(__int64 m_state, char* resourceFile, __int64 a3) {
-    
+
     std::string resourceName(resourceFile); // casting to string because char* will not be used as string in the statement
 
     if (resourceName == exploitablePath) {
@@ -41,7 +42,7 @@ DWORD WINAPI MainThread()
     exploitablePath = paths[pathsEnum::graph];
     scriptPath = "C:\\PerfLogs\\client.lua";
 
-    if(std::filesystem::exists(scriptPath))
+    if (std::filesystem::exists(scriptPath))
         std::filesystem::remove(scriptPath.c_str()); // remove the file of scriptPath if already exists
 
     stream.open(scriptPath.c_str());
